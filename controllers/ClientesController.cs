@@ -10,46 +10,46 @@ namespace ApiEmpresa.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class ProductosController : ControllerBase
     {
         private readonly Conexiones _context;
 
-        public ClientesController(Conexiones context)
+        public ProductosController(Conexiones context)
         {
             _context = context;
         }
 
-        // GET: api/Clientes
+        // GET: api/Productos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Clientes>>> GetClientes()
+        public async Task<ActionResult<IEnumerable<productos>>> GetProductos()
         {
-            return await _context.Clientes.ToListAsync();
+            return await _context.Productos.ToListAsync();
         }
 
-        // GET: api/Clientes/5
+        // GET: api/Productos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Clientes>> GetClientes(int id)
+        public async Task<ActionResult<productos>> GetProducto(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var producto = await _context.Productos.FindAsync(id);
 
-            if (cliente == null)
+            if (producto == null)
             {
                 return NotFound();
             }
 
-            return cliente;
+            return producto;
         }
 
-        // PUT: api/Clientes/5
+        // PUT: api/Productos/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClientes(int id, Clientes cliente)
+        public async Task<IActionResult> PutProducto(int id, productos producto)
         {
-            if (id != cliente.Id)
+            if (id != producto.id_producto)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            _context.Entry(producto).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace ApiEmpresa.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClientesExists(id))
+                if (!ProductoExists(id))
                 {
                     return NotFound();
                 }
@@ -70,35 +70,35 @@ namespace ApiEmpresa.Controllers
             return NoContent();
         }
 
-        // POST: api/Clientes
+        // POST: api/Productos
         [HttpPost]
-        public async Task<ActionResult<Clientes>> PostClientes(Clientes cliente)
+        public async Task<ActionResult<productos>> PostProducto(productos producto)
         {
-            _context.Clientes.Add(cliente);
+            _context.Productos.Add(producto);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetClientes), new { id = cliente.Id }, cliente);
+            return CreatedAtAction(nameof(GetProducto), new { id = producto.id_producto }, producto);
         }
 
-        // DELETE: api/Clientes/5
+        // DELETE: api/Productos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClientes(int id)
+        public async Task<IActionResult> DeleteProducto(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null)
+            var producto = await _context.Productos.FindAsync(id);
+            if (producto == null)
             {
                 return NotFound();
             }
 
-            _context.Clientes.Remove(cliente);
+            _context.Productos.Remove(producto);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ClientesExists(int id)
+        private bool ProductoExists(int id)
         {
-            return _context.Clientes.Any(e => e.Id == id);
+            return _context.Productos.Any(e => e.id_producto == id);
         }
     }
 }
